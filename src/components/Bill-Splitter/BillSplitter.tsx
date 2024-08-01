@@ -1,6 +1,7 @@
 import AddFriend from './AddFriend';
 import BillForm from './BillForm';
 import FriendList from './FriendList';
+import {useState} from "react";
 
 export interface FriendInterface {
   id: number;
@@ -31,6 +32,12 @@ const initialFriends: FriendInterface[] = [
     ];
 
 export default function BillSplitter() {
+  const [showAddFriend, setShowAddFriend] = useState(false);
+
+  function handleShowAddFriend() {
+    setShowAddFriend((show) => !show);
+  }
+
   return (
     <div>
       <div className="card" style={{ width: '50rem' }}>
@@ -44,11 +51,19 @@ export default function BillSplitter() {
               <div className="card col-6 bg-secondary-subtle">
                 <BillForm />
               </div>
-              <div className="card col-6 bg-success-subtle">
-                <AddFriend />
-              </div>
+
+              {showAddFriend ? (
+                  <div className="card col-6 bg-success-subtle">
+                    <AddFriend />
+                  </div>
+              ) : (
+                  <div className="card col-6"></div>
+              )}
+
               <div className="col-6 text-center mt-5">
-                <button className="btn btn-success">Close Add Friend</button>
+                <button onClick={handleShowAddFriend} className="btn btn-success">
+                  {showAddFriend ? ('Close') : ('Add friends')}
+                 </button>
               </div>
             </div>
           </div>
